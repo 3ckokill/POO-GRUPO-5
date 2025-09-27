@@ -25,6 +25,39 @@ public class POOgrupo5 {
             System.out.println("¿Cuántas personas desea ingresar?");
             int n = sc.nextInt();
             sc.nextLine(); 
+            for (int i = 0; i < n; i++) {
+                System.out.println("Ingrese el nombre de la persona " + (i + 1) + ":");
+                String nombre = sc.nextLine();
+
+                System.out.println("Ingrese (1) sueldo o (2) sueldo con bono:");
+                int opcion = sc.nextInt();
+                double sueldo, bono;
+
+                if (opcion == 1) {
+                    System.out.println("Ingrese el sueldo:");
+                    sueldo = sc.nextDouble();
+                    listaPersonas.add(new Persona(nombre, sueldo));
+                } else if (opcion == 2) {
+                    System.out.println("Ingrese el sueldo:");
+                    sueldo = sc.nextDouble();
+                    System.out.println("Ingrese el bono:");
+                    bono = sc.nextDouble();
+                    Persona p = new Persona(nombre, 0); 
+                    p.asignarSueldo(sueldo, bono);  
+                    listaPersonas.add(p);
+                } else {
+                    System.out.println("Opción inválida, se asignará sueldo 0.");
+                    listaPersonas.add(new Persona(nombre, 0));
+                }
+                sc.nextLine(); 
+
+            System.out.println("\nLista de personas ingresadas:");
+            for (Persona p : listaPersonas) {
+                System.out.println(p);
+            }
+
+            }
+
 
             
 
@@ -43,6 +76,14 @@ class Persona {
     public Persona(String nombre, double sueldo) {
         this.nombre = nombre;
         this.sueldo = sueldo;
+    }
+    
+    public void asignarSueldo(double sueldo) {
+        this.sueldo = sueldo;
+    }
+
+    public void asignarSueldo(double sueldo, double bono) {
+        this.sueldo = sueldo + bono;
     }
 
     @Override
