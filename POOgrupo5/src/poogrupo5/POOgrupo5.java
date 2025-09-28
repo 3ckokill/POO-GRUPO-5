@@ -29,6 +29,8 @@ public class POOgrupo5 {
             {
                 System.out.println("Ingrese el nombre de la persona " + (i + 1) + ":");
                 String nombre = sc.nextLine();
+                System.out.println("Ingrese edad de la persona " + (i + 1) + ":");
+                String edad = sc.nextLine();
 
                 System.out.println("Ingrese (1) sueldo o (2) sueldo con bono:");
                 int opcion = sc.nextInt();
@@ -69,6 +71,7 @@ public class POOgrupo5 {
 class Persona {
     private String nombre;
     private double sueldo;
+    private int edad;
 
     public Persona(String nombre, double sueldo) {
         this.nombre = nombre;
@@ -83,8 +86,16 @@ class Persona {
         this.sueldo = sueldo + bono;
     }
 
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
     @Override
     public String toString() {
-        return "Nombre: " + nombre + ", Sueldo: " + sueldo;
+        return "Nombre: " + nombre +" Edad:"+edad+ ", Sueldo: " + sueldo;
     }
 }
