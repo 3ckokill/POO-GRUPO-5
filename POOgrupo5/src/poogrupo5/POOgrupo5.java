@@ -74,7 +74,7 @@ class Persona {
         this.nombre = nombre;
         this.sueldo = sueldo;
     }
-    
+    //Sobrecarga de Metodos
     public void asignarSueldo(double sueldo) {
         this.sueldo = sueldo;
     }
