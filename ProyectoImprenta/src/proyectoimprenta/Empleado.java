@@ -8,6 +8,20 @@ package proyectoimprenta;
  *
  * @author 3ckok
  */
-public class Empleado {
+public class Empleado extends Persona {
+    
+    String sueldo;
+    String cargo;
+
+    public Empleado(String sueldo, String cargo, String apellidoPaterno, String apellidoMaterno, String tipoDocumento, String NumeroDoumento, String dirrecion, String numeroCelular, String correo) {
+        super(apellidoPaterno, apellidoMaterno, tipoDocumento, NumeroDoumento, dirrecion, numeroCelular, correo);
+        this.sueldo = sueldo;
+        this.cargo = cargo;
+    }
+
+    @Override
+    public void mostrarDatos() {
+        
+    }
     
 }
