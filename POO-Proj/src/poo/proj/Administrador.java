@@ -33,4 +33,9 @@ public class Administrador extends Trabajador {
     public void setReportesGenerados(List<Reporte> reportesGenerados) {
         this.reportesGenerados = reportesGenerados;
     }
+
+    @Override
+    public void mostrarDatos() {
+       
+    }
 }

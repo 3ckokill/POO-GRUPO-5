@@ -6,7 +6,7 @@ package proyectoimprenta;
 
 
 public abstract class Persona {
-    
+
     protected String nombreCompleto;
     protected String apellidoPaterno;
     protected String apellidoMaterno;
@@ -16,7 +16,8 @@ public abstract class Persona {
     protected String numeroCelular;
     protected String correo;
 
-    public Persona(String apellidoPaterno, String apellidoMaterno, String tipoDocumento, String NumeroDoumento, String dirrecion, String numeroCelular, String correo) {
+    public Persona(String apellidoPaterno, String apellidoMaterno, String tipoDocumento, String NumeroDoumento,
+            String dirrecion, String numeroCelular, String correo) {
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.tipoDocumento = tipoDocumento;
@@ -25,7 +26,7 @@ public abstract class Persona {
         this.numeroCelular = numeroCelular;
         this.correo = correo;
     }
-    
+
     public abstract void mostrarDatos();
-    
+
 }

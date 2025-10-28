@@ -16,7 +16,6 @@ public class Controlador {
         this.listaPedidos = new ArrayList<>();
     }
 
-    // Métodos del diagrama
     public void iniciarSesion() {
     }
 

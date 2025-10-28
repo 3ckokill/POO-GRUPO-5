@@ -1,0 +1,1 @@
+Pedido: Juan Perez; Producto: Tarjeta; Cantidad: 100; Total: 50.0

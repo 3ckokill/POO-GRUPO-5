@@ -6,14 +6,18 @@ import java.util.List;
 public class Cliente extends Persona {
 
     private String tipoIdentificacion;
-    private String numeroDocumento;
     private String tipoCliente;
 
     private List<Pedido> pedidosAsociados;
 
-    public Cliente() {
-        super();
-        this.pedidosAsociados = new ArrayList<>();
+    public Cliente(String tipoIdentificacion, String numeroDocumento, String tipoCliente, List<Pedido> pedidosAsociados, 
+            int id, String nombre, String apellidoPaterno, String apellidoMaterno, String tipoDocumento,
+            String correo, String telefono, String direccion) {
+        super(id, nombre, apellidoPaterno, apellidoMaterno, tipoDocumento, numeroDocumento, correo, telefono, direccion);
+        this.tipoIdentificacion = tipoIdentificacion;
+        this.numeroDocumento = numeroDocumento;
+        this.tipoCliente = tipoCliente;
+        this.pedidosAsociados = pedidosAsociados;
     }
 
     public void registrarCliente() {
@@ -38,15 +42,7 @@ public class Cliente extends Persona {
     public void setTipoIdentificacion(String tipoIdentificacion) {
         this.tipoIdentificacion = tipoIdentificacion;
     }
-
-    public String getNumeroDocumento() {
-        return numeroDocumento;
-    }
-
-    public void setNumeroDocumento(String numeroDocumento) {
-        this.numeroDocumento = numeroDocumento;
-    }
-
+    
     public String getTipoCliente() {
         return tipoCliente;
     }
@@ -61,5 +57,10 @@ public class Cliente extends Persona {
 
     public void setPedidosAsociados(List<Pedido> pedidosAsociados) {
         this.pedidosAsociados = pedidosAsociados;
+    }
+
+    @Override
+    public void mostrarDatos() {
+        
     }
 }

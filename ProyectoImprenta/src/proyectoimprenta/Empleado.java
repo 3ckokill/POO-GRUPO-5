@@ -11,13 +11,11 @@ package proyectoimprenta;
 public class Empleado extends Persona {
 
     String sueldo;
-    String cargo;
 
-    public Empleado(String sueldo, String cargo, String apellidoPaterno, String apellidoMaterno, String tipoDocumento,
+    public Empleado(String sueldo, String apellidoPaterno, String apellidoMaterno, String tipoDocumento,
             String NumeroDoumento, String dirrecion, String numeroCelular, String correo) {
         super(apellidoPaterno, apellidoMaterno, tipoDocumento, NumeroDoumento, dirrecion, numeroCelular, correo);
         this.sueldo = sueldo;
-        this.cargo = cargo;
     }
 
     @Override
@@ -32,7 +30,6 @@ public class Empleado extends Persona {
         System.out.println("Numero de Celular: " + this.numeroCelular);
         System.out.println("Correo: " + this.correo);
         System.out.println("Sueldo: " + this.sueldo);
-        System.out.println("Cargo: " + this.cargo);
         System.out.println("\n");
     }
 

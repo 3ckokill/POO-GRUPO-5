@@ -3,14 +3,12 @@ package poo.proj;
 public abstract class Trabajador extends Persona {
 
     private int idEmpleado;
-    private String cargo;
-    private String rol;
-    private String estado;
 
-    public Trabajador() {
-        super();
+    public Trabajador(int idEmpleado, int id, String nombre, String apellidoPaterno, String apellidoMaterno, String tipoDocumento, String numeroDocumento, String correo, String telefono, String direccion) {
+        super(id, nombre, apellidoPaterno, apellidoMaterno, tipoDocumento, numeroDocumento, correo, telefono, direccion);
+        this.idEmpleado = idEmpleado;
     }
-
+    
     public void registrarEmpleado() {
     }
 
@@ -28,27 +26,4 @@ public abstract class Trabajador extends Persona {
         this.idEmpleado = idEmpleado;
     }
 
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
-
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
 }
