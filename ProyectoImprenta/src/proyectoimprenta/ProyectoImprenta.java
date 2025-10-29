@@ -17,5 +17,6 @@ public class ProyectoImprenta {
 
         Vista vista = new Vista(new ControladorPersonas());
         vista.ejecutarMenu();
+        System.out.println("Hola");
     }
 }
