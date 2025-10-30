@@ -1,7 +1,8 @@
 package poo.proj;
 
 public abstract class Persona {
-
+    
+    private static int contador = 1;
     protected int id;
     protected String nombre;
     protected String apellidoPaterno;
@@ -13,7 +14,7 @@ public abstract class Persona {
     protected String direccion;
 
     public Persona(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String tipoDocumento, String numeroDocumento, String correo, String telefono, String direccion) {
-        this.id = id;
+        this.id = contador++;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -22,14 +23,6 @@ public abstract class Persona {
         this.correo = correo;
         this.telefono = telefono;
         this.direccion = direccion;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -55,12 +48,18 @@ public abstract class Persona {
     public void setApellidoMaterno(String apellidoMaterno) {
         this.apellidoMaterno = apellidoMaterno;
     }
-
+    
+    public String getNombreCompleto() {
+    return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+    }
     public String getTipoDocumento() {
         return tipoDocumento;
     }
 
     public void setTipoDocumento(String tipoDocumento) {
+        if (tipoDocumento == null || tipoDocumento.isBlank()) {
+            throw new IllegalArgumentException("El tipo de documento no puede estar vacío.");
+        }
         this.tipoDocumento = tipoDocumento;
     }
 
@@ -69,6 +68,10 @@ public abstract class Persona {
     }
 
     public void setNumeroDocumento(String numeroDocumento) {
+        
+        if (numeroDocumento == null || numeroDocumento.isEmpty()) {
+            throw new IllegalArgumentException("El número de documento no puede estar vacío.");
+        }
         this.numeroDocumento = numeroDocumento;
     }
 

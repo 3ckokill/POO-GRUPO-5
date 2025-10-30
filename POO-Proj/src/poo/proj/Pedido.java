@@ -1,86 +1,38 @@
 package poo.proj;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Pedido {
 
+    private static int contador = 1;
+
     private int idPedido;
-    private Date fechaCreacion;
-    private Date fechaEntrega;
-    private String estado;
-    private int cantidad;
+    private Cliente cliente;
+    private Trabajador empleadoResponsable; // <-- cambiado a Trabajador
+    private ArrayList<Producto> productos;
+    private Date fechaPedido;
+    private String estado; // Pendiente, En proceso, Entregado
     private double total;
 
-    private Cliente cliente;
-    private Empleado empleado;
-    private DetallePedido detallePedido;
-    public Pedido() {
+    // Constructor básico
+    public Pedido(Cliente cliente, Trabajador empleadoResponsable, Date fechaPedido) {
+        this.idPedido = contador++;
+        this.cliente = cliente;
+        this.empleadoResponsable = empleadoResponsable;
+        this.fechaPedido = fechaPedido;
+        this.estado = "Pendiente";
+        this.productos = new ArrayList<>();
+        this.total = 0.0;
     }
 
-    public void registrarPedido() {
-    }
-
-    public void calcularTotal() {
-    }
-
-    public void cambiarEstado() {
-    }
-
-    public void eliminarPedido() {
-    }
-
-    public void consultarPedidos() {
-    }
-
-    public void registrarFechas() {
-    }
-
+    // Getters y Setters
     public int getIdPedido() {
         return idPedido;
     }
 
     public void setIdPedido(int idPedido) {
         this.idPedido = idPedido;
-    }
-
-    public Date getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-    public Date getFechaEntrega() {
-        return fechaEntrega;
-    }
-
-    public void setFechaEntrega(Date fechaEntrega) {
-        this.fechaEntrega = fechaEntrega;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
     }
 
     public Cliente getCliente() {
@@ -91,19 +43,94 @@ public class Pedido {
         this.cliente = cliente;
     }
 
-    public Empleado getEmpleado() {
-        return empleado;
+    public Trabajador getEmpleadoResponsable() {
+        return empleadoResponsable;
     }
 
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
+    public void setEmpleadoResponsable(Trabajador empleadoResponsable) {
+        this.empleadoResponsable = empleadoResponsable;
     }
 
-    public DetallePedido getDetallePedido() {
-        return detallePedido;
+    public ArrayList<Producto> getProductos() {
+        return productos;
     }
 
-    public void setDetallePedido(DetallePedido detallePedido) {
-        this.detallePedido = detallePedido;
+    public void setProductos(ArrayList<Producto> productos) {
+        this.productos = productos;
+        recalcularTotal();
+    }
+
+    public Date getFechaPedido() {
+        return fechaPedido;
+    }
+
+    public void setFechaPedido(Date fechaPedido) {
+        this.fechaPedido = fechaPedido;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    // Métodos funcionales
+    public void agregarProducto(Producto producto) {
+        if (producto != null) {
+            productos.add(producto);
+            recalcularTotal();
+        }
+    }
+
+    public void eliminarProducto(Producto producto) {
+        productos.remove(producto);
+        recalcularTotal();
+    }
+
+    private void recalcularTotal() {
+        double suma = 0.0;
+        for (Producto p : productos) {
+            suma += p.getPrecio();
+        }
+        this.total = suma;
+    }
+
+    public void cambiarEstado(String nuevoEstado) {
+        if (nuevoEstado.equalsIgnoreCase("Pendiente")
+                || nuevoEstado.equalsIgnoreCase("En proceso")
+                || nuevoEstado.equalsIgnoreCase("Entregado")) {
+            this.estado = nuevoEstado;
+        } else {
+            System.out.println("Estado no válido.");
+        }
+    }
+
+    public void mostrarDatos() {
+        System.out.println("=== PEDIDO ===");
+        System.out.println("ID Pedido: " + idPedido);
+        System.out.println("Cliente: " + (cliente != null ? cliente.getNombre() : "No asignado"));
+        System.out.println("Trabajador responsable: " + (empleadoResponsable != null ? empleadoResponsable.getNombre() : "No asignado"));
+        System.out.println("Fecha: " + fechaPedido);
+        System.out.println("Estado: " + estado);
+        System.out.println("Productos en el pedido:");
+        if (productos.isEmpty()) {
+            System.out.println("   - Ninguno");
+        } else {
+            for (Producto p : productos) {
+                System.out.println("   - " + p.getNombre() + " (S/." + p.getPrecio() + ")");
+            }
+        }
+        System.out.println("Total: S/." + total);
+        System.out.println("====================");
     }
 }

@@ -1,41 +1,28 @@
 package poo.proj;
 
 public class Material {
-
+    private static int contador = 1;
     private int idMaterial;
     private String nombre;
-    private int stockActual;
-    private int stockMinimo;
+    private double cantidadDisponible;
     private String unidadMedida;
     private double costoUnitario;
 
-    public Material() {
+    public Material(String nombre, double cantidadDisponible, String unidadMedida) {
+        this.idMaterial = contador++;
+        this.nombre = nombre;
+        this.cantidadDisponible = cantidadDisponible;
+        this.unidadMedida = unidadMedida;
+        this.costoUnitario = 0.0; // valor por defecto
     }
 
-    public void registrarMaterial() {
-    }
-
-    public void modificarMaterial() {
-    }
-
-    public void eliminarMaterial() {
-    }
-
-    public void actualizarStock() {
-    }
-
-    public void verificarStockBajo() {
-    }
-
-    public void listarMateriales() {
+    public Material(String nombre, double cantidadDisponible, String unidadMedida, double costoUnitario) {
+        this(nombre, cantidadDisponible, unidadMedida);
+        this.costoUnitario = costoUnitario;
     }
 
     public int getIdMaterial() {
         return idMaterial;
-    }
-
-    public void setIdMaterial(int idMaterial) {
-        this.idMaterial = idMaterial;
     }
 
     public String getNombre() {
@@ -46,20 +33,16 @@ public class Material {
         this.nombre = nombre;
     }
 
-    public int getStockActual() {
-        return stockActual;
+    public double getCantidadDisponible() {
+        return cantidadDisponible;
     }
 
-    public void setStockActual(int stockActual) {
-        this.stockActual = stockActual;
-    }
-
-    public int getStockMinimo() {
-        return stockMinimo;
-    }
-
-    public void setStockMinimo(int stockMinimo) {
-        this.stockMinimo = stockMinimo;
+    public void setCantidadDisponible(double cantidadDisponible) {
+        if (cantidadDisponible >= 0) {
+            this.cantidadDisponible = cantidadDisponible;
+        } else {
+            System.out.println("La cantidad no puede ser negativa.");
+        }
     }
 
     public String getUnidadMedida() {
@@ -75,6 +58,30 @@ public class Material {
     }
 
     public void setCostoUnitario(double costoUnitario) {
-        this.costoUnitario = costoUnitario;
+        if (costoUnitario >= 0) {
+            this.costoUnitario = costoUnitario;
+        } else {
+            System.out.println("El costo unitario no puede ser negativo.");
+        }
+    }
+
+    // Método para actualizar la cantidad (sumar o restar)
+    public void actualizarCantidad(double cambio) {
+        double nuevaCantidad = cantidadDisponible + cambio;
+        if (nuevaCantidad >= 0) {
+            cantidadDisponible = nuevaCantidad;
+        } else {
+            System.out.println("Error: no hay suficiente material disponible para realizar la operación.");
+        }
+    }
+
+    // Mostrar información del material
+    public void mostrarDatos() {
+        System.out.println("=== Material ===");
+        System.out.println("ID: " + idMaterial);
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Cantidad disponible: " + cantidadDisponible + " " + unidadMedida);
+        System.out.println("Costo unitario: S/." + costoUnitario);
+        System.out.println("================");
     }
 }

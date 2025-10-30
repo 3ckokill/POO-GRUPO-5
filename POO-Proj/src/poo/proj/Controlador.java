@@ -1,74 +1,133 @@
 package poo.proj;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Controlador {
-    private List<Cliente> listaClientes;
-    private List<Empleado> listaEmpleados;
-    private List<Producto> listaProductos;
-    private List<Pedido> listaPedidos;
 
+    private ArrayList<Cliente> clientes;
+    private ArrayList<Trabajador> trabajadores;
+    private ArrayList<Producto> productos;
+    private ArrayList<Material> materiales;
+    private ArrayList<Pedido> pedidos;
+
+    // Constructor
     public Controlador() {
-        this.listaClientes = new ArrayList<>();
-        this.listaEmpleados = new ArrayList<>();
-        this.listaProductos = new ArrayList<>();
-        this.listaPedidos = new ArrayList<>();
+        clientes = new ArrayList<>();
+        trabajadores = new ArrayList<>();
+        productos = new ArrayList<>();
+        materiales = new ArrayList<>();
+        pedidos = new ArrayList<>();
     }
 
-    public void iniciarSesion() {
+    //  MÉTODOS PARA CLIENTES 
+    public void registrarCliente(Cliente c) {
+        clientes.add(c);
+        System.out.println("Cliente registrado correctamente: " + c.getNombre());
     }
 
-    public void gestionarClientes() {
+    public Cliente buscarClientePorDNI(String dni) {
+        for (Cliente c : clientes) {
+            if (c.getNumeroDocumento().equals(dni)) {
+                return c;
+            }
+        }
+        System.out.println("Cliente no encontrado.");
+        return null;
     }
 
-    public void gestionarEmpleados() {
+    public void listarClientes() {
+        System.out.println("=== LISTA DE CLIENTES ===");
+        for (Cliente c : clientes) {
+            c.mostrarDatos();
+        }
     }
 
-    public void gestionarProductos() {
+    public void eliminarCliente(String dni) {
+        Cliente cliente = buscarClientePorDNI(dni);
+        if (cliente != null) {
+            clientes.remove(cliente);
+            System.out.println("Cliente eliminado correctamente.");
+        }
     }
 
-    public void gestionarPedidos() {
+    // MÉTODOS PARA TRABAJADORES
+    public void registrarEmpleado(Trabajador e) {
+        trabajadores.add(e);
+        System.out.println("Empleado registrado correctamente: " + e.getNombre());
     }
 
-    public void generarReportes() {
+    public void listarTrabajadores() {
+        System.out.println("=== LISTA DE EMPLEADOS ===");
+        for (Trabajador e : trabajadores) {
+            e.mostrarDatos();
+        }
     }
 
-    public void guardarDatos() {
+    //  MÉTODOS PARA PRODUCTOS 
+    public void registrarProducto(Producto p) {
+        productos.add(p);
+        System.out.println("Producto registrado correctamente: " + p.getNombre());
     }
 
-    public void cargarDatos() {
+    public void listarProductos() {
+        System.out.println("=== CATÁLOGO DE PRODUCTOS ===");
+        for (Producto p : productos) {
+            p.mostrarDatos();
+        }
     }
 
-    public List<Cliente> getListaClientes() {
-        return listaClientes;
+    //  MÉTODOS PARA MATERIALES 
+    public void registrarMaterial(Material m) {
+        materiales.add(m);
+        System.out.println("Material registrado: " + m.getNombre());
     }
 
-    public void setListaClientes(List<Cliente> listaClientes) {
-        this.listaClientes = listaClientes;
+    public void listarMateriales() {
+        System.out.println("=== LISTA DE MATERIALES ===");
+        for (Material m : materiales) {
+            m.mostrarDatos();
+        }
     }
 
-    public List<Empleado> getListaEmpleados() {
-        return listaEmpleados;
+ 
+    public void registrarPedido(Pedido p) {
+        pedidos.add(p);
+        System.out.println("Pedido registrado correctamente. ID: " + p.getIdPedido());
     }
 
-    public void setListaEmpleados(List<Empleado> listaEmpleados) {
-        this.listaEmpleados = listaEmpleados;
+    public void listarPedidos() {
+        System.out.println("=== LISTA DE PEDIDOS ===");
+        for (Pedido p : pedidos) {
+            p.mostrarDatos();
+        }
     }
 
-    public List<Producto> getListaProductos() {
-        return listaProductos;
+    public Pedido buscarPedidoPorId(int id) {
+        for (Pedido p : pedidos) {
+            if (p.getIdPedido() == id) {
+                return p;
+            }
+        }
+        System.out.println("Pedido no encontrado.");
+        return null;
+    }
+    
+    // GETTER PARA LA LISTA
+    
+    public ArrayList<Trabajador> getTrabajadores() {
+        return trabajadores;
     }
 
-    public void setListaProductos(List<Producto> listaProductos) {
-        this.listaProductos = listaProductos;
+    // MÉTODOS AUXILIARES 
+    public int cantidadClientes() {
+        return clientes.size();
     }
 
-    public List<Pedido> getListaPedidos() {
-        return listaPedidos;
+    public int cantidadTrabajadores() {
+        return trabajadores.size();
     }
 
-    public void setListaPedidos(List<Pedido> listaPedidos) {
-        this.listaPedidos = listaPedidos;
+    public int cantidadPedidos() {
+        return pedidos.size();
     }
 }

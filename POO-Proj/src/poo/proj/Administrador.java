@@ -1,41 +1,35 @@
 package poo.proj;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Administrador extends Trabajador {
 
-    private List<Reporte> reportesGenerados;
+    static final double SUELDO_BASE = 2000.0;
 
-    public Administrador() {
-        super();
-        this.reportesGenerados = new ArrayList<>();
+    public Administrador(String fechaIngreso, int id, String nombre, String apellidoPaterno, String apellidoMaterno, String tipoDocumento, String numeroDocumento, String correo, String telefono, String direccion) {
+        super("Administrador", SUELDO_BASE, fechaIngreso, id, nombre, apellidoPaterno, apellidoMaterno, tipoDocumento, numeroDocumento, correo, telefono, direccion);
     }
 
-    @Override
     public void registrarEmpleado() {
+        
+        System.out.println("El administrador " + getNombreCompleto() + " está registrando un nuevo empleado...");
     }
 
-    @Override
-    public void eliminarEmpleado() {
-    }
-
-    public void generarReportes() {
-    }
-
-    public void consultarHistorialPedidos() {
-    }
-
-    public List<Reporte> getReportesGenerados() {
-        return reportesGenerados;
-    }
-
-    public void setReportesGenerados(List<Reporte> reportesGenerados) {
-        this.reportesGenerados = reportesGenerados;
+    public void generarReporte() {
+        System.out.println("El administrador " + getNombreCompleto() + " está generando un reporte del sistema...");
     }
 
     @Override
     public void mostrarDatos() {
-       
+       System.out.println("=== Datos del Administrador ===");
+        System.out.println("ID: " + id);
+        System.out.println("Nombre: " + getNombreCompleto());
+        System.out.println("Documento: " + tipoDocumento + " " + numeroDocumento);
+        System.out.println("Cargo: " + cargo);
+        System.out.println("Salario fijo: S/." + salario);
+        System.out.println("Fecha de Ingreso: " + fechaIngreso);
+        System.out.println("Correo: " + correo);
+        System.out.println("Teléfono: " + telefono);
+        System.out.println("Dirección: " + direccion);
+        System.out.println("===============================");
     }
 }

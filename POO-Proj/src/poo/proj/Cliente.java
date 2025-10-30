@@ -1,48 +1,28 @@
 package poo.proj;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Cliente extends Persona {
 
-    private String tipoIdentificacion;
+    private double descuento;
     private String tipoCliente;
 
-    private List<Pedido> pedidosAsociados;
-
-    public Cliente(String tipoIdentificacion, String numeroDocumento, String tipoCliente, List<Pedido> pedidosAsociados, 
-            int id, String nombre, String apellidoPaterno, String apellidoMaterno, String tipoDocumento,
-            String correo, String telefono, String direccion) {
+    public Cliente(double descuento, String tipoCliente, int id, String nombre, String apellidoPaterno, String apellidoMaterno, String tipoDocumento, String numeroDocumento, String correo, String telefono, String direccion) {
         super(id, nombre, apellidoPaterno, apellidoMaterno, tipoDocumento, numeroDocumento, correo, telefono, direccion);
-        this.tipoIdentificacion = tipoIdentificacion;
-        this.numeroDocumento = numeroDocumento;
+        this.descuento = descuento;
         this.tipoCliente = tipoCliente;
-        this.pedidosAsociados = pedidosAsociados;
     }
 
-    public void registrarCliente() {
+    public double getDescuento() {
+        return descuento;
     }
 
-    public void modificarCliente() {
+    public void setDescuento(double descuento) {
+       if (descuento >= 0 && descuento <= 1) {
+            this.descuento = descuento;
+        } else {
+            System.out.println("El descuento debe estar entre 0 y 1 (ejemplo: 0.15 para 15%).");
+        }
     }
 
-    public void buscarCliente() {
-    }
-
-    public void listarClientes() {
-    }
-
-    public void mostrarPedidosAsociados() {
-    }
-
-    public String getTipoIdentificacion() {
-        return tipoIdentificacion;
-    }
-
-    public void setTipoIdentificacion(String tipoIdentificacion) {
-        this.tipoIdentificacion = tipoIdentificacion;
-    }
-    
     public String getTipoCliente() {
         return tipoCliente;
     }
@@ -50,17 +30,19 @@ public class Cliente extends Persona {
     public void setTipoCliente(String tipoCliente) {
         this.tipoCliente = tipoCliente;
     }
-
-    public List<Pedido> getPedidosAsociados() {
-        return pedidosAsociados;
-    }
-
-    public void setPedidosAsociados(List<Pedido> pedidosAsociados) {
-        this.pedidosAsociados = pedidosAsociados;
-    }
-
+    
     @Override
     public void mostrarDatos() {
         
+        System.out.println("=== Datos del Cliente ===");
+        System.out.println("ID: " + id);
+        System.out.println("Nombre: " + getNombreCompleto());
+        System.out.println("Documento: " + tipoDocumento + " " + numeroDocumento);
+        System.out.println("Tipo de Cliente: " + tipoCliente);
+        System.out.println("Descuento: " + (descuento * 100) + "%");
+        System.out.println("Correo: " + correo);
+        System.out.println("Teléfono: " + telefono);
+        System.out.println("Dirección: " + direccion);
+        System.out.println("=========================");
     }
 }
