@@ -21,23 +21,18 @@ public class Controlador {
 
     //  MÉTODOS PARA CLIENTES 
     public void registrarCliente(Cliente c) {
-        Cliente clienteExistente = buscarClientePorDNI(c.getNumeroDocumento());
-        if (clienteExistente != null) {
-        System.out.println("Error: Ya existe un cliente con el DNI " + c.getNumeroDocumento());
-        } else {
         clientes.add(c);
         System.out.println("Cliente registrado correctamente: " + c.getNombre());
-        }
     }
 
     public Cliente buscarClientePorDNI(String dni) {
         for (Cliente c : clientes) {
             if (c.getNumeroDocumento().equals(dni)) {
-                return c; // Lo encontró, lo devuelve
+                return c;
             }
         }
-        // System.out.println("Cliente no encontrado."); // <-- BORRA O COMENTA ESTA LÍNEA
-        return null; // Si no lo encuentra, solo retorna null
+        System.out.println("Cliente no encontrado.");
+        return null;
     }
 
     public void listarClientes() {
@@ -54,38 +49,60 @@ public class Controlador {
             System.out.println("Cliente eliminado correctamente.");
         }
     }
+    
+    public ArrayList<Cliente> buscarClientesPorCriterio(String criterio) {
+        ArrayList<Cliente> encontrados = new ArrayList<>();
+        String criterioBusqueda = criterio.toLowerCase();
+
+        for (Cliente c : clientes) {
+            // Comprueba si el DNI coincide O si el nombre completo contiene el criterio
+            if (c.getNumeroDocumento().equals(criterio) || 
+                c.getNombreCompleto().toLowerCase().contains(criterioBusqueda)) {
+
+                encontrados.add(c);
+            }
+        }
+        return encontrados; // Devuelve la lista (puede estar vacía)
+    }
 
     // MÉTODOS PARA TRABAJADORES
     public void registrarEmpleado(Trabajador e) {
         trabajadores.add(e);
         System.out.println("Empleado registrado correctamente: " + e.getNombre());
     }
+    
+    public void listarTrabajadores() {
+            System.out.println("=== LISTA DE EMPLEADOS ===");
 
+            // --- VALIDACIÓN LISTA VACÍA ---
+            if (trabajadores.isEmpty()) {
+                System.out.println("No hay empleados registrados.");
+                return;
+            }
+            // --- FIN VALIDACIÓN ---
+            for (Trabajador e : trabajadores) {
+                e.mostrarDatos();
+            }
+    }
+    
+    public void eliminarTrabajador(String dni) {
+        Trabajador trabajador = buscarTrabajadorPorDNI(dni);
+        if (trabajador != null) {
+            trabajadores.remove(trabajador);
+            System.out.println("Trabajador eliminado correctamente.");
+        } else {
+            System.out.println("No se encontró un trabajador con el DNI " + dni + ".");
+        }
+    }
+    
     public Trabajador buscarTrabajadorPorDNI(String dni) {
         for (Trabajador t : trabajadores) {
             if (t.getNumeroDocumento().equals(dni)) {
                 return t;
             }
         }
-        return null;
+        return null; // No lo encontró
     }
-
-    public void listarTrabajadores() {
-        System.out.println("=== LISTA DE EMPLEADOS ===");
-        for (Trabajador e : trabajadores) {
-            e.mostrarDatos();
-        }
-    }
-
-    public void eliminarTrabajador(String dni) {
-    Trabajador trabajador = buscarTrabajadorPorDNI(dni);
-    if (trabajador != null) {
-        trabajadores.remove(trabajador);
-        System.out.println("Trabajador eliminado correctamente.");
-         } else {
-        System.out.println("Trabajador no encontrado.");
-      }
-    }   
 
     //  MÉTODOS PARA PRODUCTOS 
     public void registrarProducto(Producto p) {
@@ -121,26 +138,8 @@ public class Controlador {
 
     public void listarPedidos() {
         System.out.println("=== LISTA DE PEDIDOS ===");
-        if (pedidos.isEmpty()) {
-            System.out.println("No hay pedidos registrados.");
-            return;
-        }
         for (Pedido p : pedidos) {
             p.mostrarDatos();
-        }
-    }
-    
-    public void listarPedidosPorCliente(String dniCliente) {
-        System.out.println("=== PEDIDOS DEL CLIENTE " + dniCliente + " ===");
-        boolean encontrados = false;
-        for (Pedido p : pedidos) {
-            // Obtenemos el cliente del pedido y comparamos su DNI
-            if (p.getCliente().getNumeroDocumento().equals(dniCliente)) {
-                p.mostrarDatos();
-                encontrados = true;
-            }
-        }if (!encontrados) {
-            System.out.println("El cliente no tiene pedidos registrados.");
         }
     }
 
@@ -152,9 +151,31 @@ public class Controlador {
         }
         System.out.println("Pedido no encontrado.");
         return null;
-    }    
-    // GETTER PARA LA LISTA
+    }
     
+    public void listarPedidosPorCliente(String dniCliente) {
+    Cliente cliente = buscarClientePorDNI(dniCliente);
+    if (cliente == null) {
+        System.out.println("No se puede listar pedidos: Cliente con DNI " + dniCliente + " no encontrado.");
+        return;
+    }
+
+    System.out.println("\n=== PEDIDOS DEL CLIENTE: " + cliente.getNombreCompleto() + " ===");
+
+    boolean tienePedidos = false;
+    for (Pedido p : pedidos) {
+        if (p.getCliente().getNumeroDocumento().equals(dniCliente)) {
+            p.mostrarDatos(); // Si coincide, muestra el pedido
+            tienePedidos = true;
+        }
+    }
+
+    if (!tienePedidos) {
+        System.out.println("El cliente no tiene pedidos registrados.");
+        }
+    }
+    
+    // GETTER PARA LA LISTA    
     public ArrayList<Trabajador> getTrabajadores() {
         return trabajadores;
     }

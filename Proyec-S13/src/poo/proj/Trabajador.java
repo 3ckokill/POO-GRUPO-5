@@ -6,15 +6,8 @@ public abstract class Trabajador extends Persona {
     protected double salario;
     protected String fechaIngreso;
 
-    public Trabajador(String cargo, double salario, String fechaIngreso, 
-                      String nombre, String apellidoPaterno, String apellidoMaterno, 
-                      String tipoDocumento, String numeroDocumento, 
-                      String correo, String telefono, String direccion) {
-        
-        // Ya no pasamos 'id'
-        super(nombre, apellidoPaterno, apellidoMaterno, tipoDocumento, 
-              numeroDocumento, correo, telefono, direccion);
-        
+    public Trabajador(String cargo, double salario, String fechaIngreso, int id, String nombre, String apellidoPaterno, String apellidoMaterno, String tipoDocumento, String numeroDocumento, String correo, String telefono, String direccion) {
+        super(id, nombre, apellidoPaterno, apellidoMaterno, tipoDocumento, numeroDocumento, correo, telefono, direccion);
         this.cargo = cargo;
         this.salario = salario;
         this.fechaIngreso = fechaIngreso;
@@ -61,4 +54,9 @@ public abstract class Trabajador extends Persona {
         System.out.println("Teléfono: " + telefono);
         System.out.println("Dirección: " + direccion);
     }
+    
+    
+    
+    
+
 }

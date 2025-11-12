@@ -5,17 +5,10 @@ public class Cliente extends Persona {
     private double descuento;
     private String tipoCliente;
 
-    public Cliente(double descuento, String tipoCliente, String nombre, 
-                       String apellidoPaterno, String apellidoMaterno, 
-                       String tipoDocumento, String numeroDocumento, 
-                       String correo, String telefono, String direccion) {
-
-            // Ya no pasamos 'id'
-            super(nombre, apellidoPaterno, apellidoMaterno, tipoDocumento, 
-                  numeroDocumento, correo, telefono, direccion);
-
-            this.descuento = descuento;
-            this.tipoCliente = tipoCliente;
+    public Cliente(double descuento, String tipoCliente, int id, String nombre, String apellidoPaterno, String apellidoMaterno, String tipoDocumento, String numeroDocumento, String correo, String telefono, String direccion) {
+        super(id, nombre, apellidoPaterno, apellidoMaterno, tipoDocumento, numeroDocumento, correo, telefono, direccion);
+        this.descuento = descuento;
+        this.tipoCliente = tipoCliente;
     }
 
     public double getDescuento() {
@@ -51,5 +44,6 @@ public class Cliente extends Persona {
         System.out.println("Teléfono: " + telefono);
         System.out.println("Dirección: " + direccion);
         System.out.println("=========================");
-    }
+    }   
+    
 }

@@ -13,39 +13,26 @@ public abstract class Persona {
     protected String telefono;
     protected String direccion;
 
-    /**
-     * Constructor modificado.
-     * Ya no recibe 'id' (se auto-asigna).
-     * Llama a los setters para validar la entrada desde la creación.
-     */
-    public Persona(String nombre, String apellidoPaterno, String apellidoMaterno, 
-                       String tipoDocumento, String numeroDocumento, 
-                       String correo, String telefono, String direccion) {
-
-            this.id = contador++; // El ID se asigna automáticamente
-            this.nombre = nombre;
-            this.apellidoPaterno = apellidoPaterno;
-            this.apellidoMaterno = apellidoMaterno;
-            this.tipoDocumento = tipoDocumento;
-            this.numeroDocumento = numeroDocumento;
-            this.correo = correo;
-            this.telefono = telefono;
-            this.direccion = direccion;
-        }
-
-    // --- GETTERS Y SETTERS CON VALIDACIÓN ---
-
-    public int getId() {
-        return id;
+    // EL CONSTRUCTOR AHORA USA LOS SETTERS PARA VALIDAR
+    public Persona(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String tipoDocumento, String numeroDocumento, String correo, String telefono, String direccion) {
+        this.id = contador++;
+        // Se llama a los setters para asegurar que los datos iniciales sean válidos
+        setNombre(nombre);
+        setApellidoPaterno(apellidoPaterno);
+        setApellidoMaterno(apellidoMaterno);
+        setTipoDocumento(tipoDocumento);
+        setNumeroDocumento(numeroDocumento);
+        setCorreo(correo);
+        setTelefono(telefono);
+        setDireccion(direccion);
     }
-    
-    // No hay un setId(int id) para proteger el auto-incremento
 
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
+        // --- NUEVA VALIDACIÓN ---
         if (nombre == null || nombre.isBlank()) {
             throw new IllegalArgumentException("El nombre no puede estar vacío.");
         }
@@ -57,6 +44,7 @@ public abstract class Persona {
     }
 
     public void setApellidoPaterno(String apellidoPaterno) {
+        // --- NUEVA VALIDACIÓN ---
         if (apellidoPaterno == null || apellidoPaterno.isBlank()) {
             throw new IllegalArgumentException("El apellido paterno no puede estar vacío.");
         }
@@ -68,24 +56,23 @@ public abstract class Persona {
     }
 
     public void setApellidoMaterno(String apellidoMaterno) {
+        // --- NUEVA VALIDACIÓN ---
         if (apellidoMaterno == null || apellidoMaterno.isBlank()) {
             throw new IllegalArgumentException("El apellido materno no puede estar vacío.");
         }
         this.apellidoMaterno = apellidoMaterno;
     }
-
+    
     public String getNombreCompleto() {
         return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
     }
-
+    
     public String getTipoDocumento() {
         return tipoDocumento;
     }
 
-    /**
-     * Setter validado (cumple tu requisito)
-     */
     public void setTipoDocumento(String tipoDocumento) {
+        // (Validación existente)
         if (tipoDocumento == null || tipoDocumento.isBlank()) {
             throw new IllegalArgumentException("El tipo de documento no puede estar vacío.");
         }
@@ -96,12 +83,9 @@ public abstract class Persona {
         return numeroDocumento;
     }
 
-    /**
-     * Setter validado (cumple tu requisito)
-     * Se usa isBlank() para consistencia.
-     */
     public void setNumeroDocumento(String numeroDocumento) {
-        if (numeroDocumento == null || numeroDocumento.isBlank()) {
+        // (Validación existente)
+        if (numeroDocumento == null || numeroDocumento.isEmpty()) {
             throw new IllegalArgumentException("El número de documento no puede estar vacío.");
         }
         this.numeroDocumento = numeroDocumento;
@@ -112,8 +96,14 @@ public abstract class Persona {
     }
 
     public void setCorreo(String correo) {
-        // Se asume que el correo puede ser nulo o vacío (opcional)
-        // Si no, agrega la misma validación que los otros campos.
+        // --- NUEVA VALIDACIÓN ---
+        if (correo == null || correo.isBlank()) {
+            throw new IllegalArgumentException("El correo no puede estar vacío.");
+        }
+        // Validación simple de formato
+        if (!correo.contains("@") || !correo.contains(".")) {
+             throw new IllegalArgumentException("El formato del correo no es válido.");
+        }
         this.correo = correo;
     }
 
@@ -122,7 +112,10 @@ public abstract class Persona {
     }
 
     public void setTelefono(String telefono) {
-        // Se asume que el teléfono puede ser opcional
+        // --- NUEVA VALIDACIÓN ---
+        if (telefono == null || telefono.isBlank()) {
+            throw new IllegalArgumentException("El teléfono no puede estar vacío.");
+        }
         this.telefono = telefono;
     }
 
@@ -131,7 +124,10 @@ public abstract class Persona {
     }
 
     public void setDireccion(String direccion) {
-        // Se asume que la dirección puede ser opcional
+        // --- NUEVA VALIDACIÓN ---
+        if (direccion == null || direccion.isBlank()) {
+            throw new IllegalArgumentException("La dirección no puede estar vacía.");
+        }
         this.direccion = direccion;
     }
     
