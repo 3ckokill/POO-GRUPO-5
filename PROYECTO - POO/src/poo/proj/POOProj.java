@@ -1,3 +1,4 @@
+
 package poo.proj;
 
 
@@ -8,5 +9,4 @@ public class POOProj {
         vista.iniciarSistema();
 
     }
-    
 }

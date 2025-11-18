@@ -68,9 +68,21 @@ public class Vista {
     System.out.print("Apellido Materno: ");
     String apMat = sc.nextLine();
     System.out.print("Tipo de Documento (DNI/CE): ");
-    String tipoDoc = sc.nextLine();
+    String tipoDoc = sc.nextLine().trim();
+
+    while (!tipoDoc.equalsIgnoreCase("DNI") && !tipoDoc.equalsIgnoreCase("CE")) {
+        System.out.println("Error: Tipo de documento no válido. Ingrese nuevamente (DNI o CE): ");
+        tipoDoc = sc.nextLine().trim();
+    }
     System.out.print("Número de Documento: ");
-    String numDoc = sc.nextLine();
+    String numDoc = sc.nextLine().trim();
+
+    if (tipoDoc.equalsIgnoreCase("DNI")) {
+    while (numDoc.length() != 8) {
+        System.out.println("Error: El DNI debe tener 8 dígitos. Ingrese nuevamente: ");
+        numDoc = sc.nextLine().trim();
+        }
+    } 
     System.out.print("Correo: ");
     String correo = sc.nextLine();
     System.out.print("Teléfono: ");
@@ -88,8 +100,6 @@ public class Vista {
     Cliente c = new Cliente(descuento, tipoCliente, id, nombre, apPat, apMat, tipoDoc, numDoc, correo, telefono, direccion);
     control.registrarCliente(c);
 }
-
-
 
     public static void eliminarCliente() {
         System.out.print("Ingrese el DNI del cliente a eliminar: ");

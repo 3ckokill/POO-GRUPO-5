@@ -17,7 +17,41 @@ public class Controlador {
         productos = new ArrayList<>();
         materiales = new ArrayList<>();
         pedidos = new ArrayList<>();
+        
+       cargarDatosIniciales();
     }
+
+    private void cargarDatosIniciales() {
+
+        clientes.add(new Cliente(0.10, "Habitual", 1,
+                "Juan", "Lopez", "Perez", "DNI", "12345678",
+                "juan@gmail.com", "987654321", "Av. Lima"));
+
+        clientes.add(new Cliente(0, "Nuevo", 2,
+                "Ana", "Torres", "Sanchez", "DNI", "87654321",
+                "ana@gmail.com", "999888777", "Jr. Arequipa"));
+
+        trabajadores.add(new Gerente("2023-01-10", 1,
+                "Carlos", "Ramirez", "Mendoza", "DNI", "11223344",
+                "carlos@empresa.com", "955123456", "Av. Grau"));
+
+        trabajadores.add(new Empleado("2024-02-01", 2,
+                "Pedro", "Soto", "Luna", "DNI", "22334455",
+                "pedro@empresa.com", "944556677", "Jr. Callao"));
+
+        Material papel = new Material("Papel Bond", 500, "hojas", 0.20);
+        Material tinta = new Material("Tinta Negra", 10, "litros", 50);
+
+        materiales.add(papel);
+        materiales.add(tinta);
+
+        Producto volantes = new Producto("Volantes A5", "Volantes color", 0.50);
+        volantes.agregarMaterial(papel);
+        volantes.agregarMaterial(tinta);
+
+        productos.add(volantes);
+    }
+    
 
     //  MÉTODOS PARA CLIENTES 
     public void registrarCliente(Cliente c) {
