@@ -170,7 +170,6 @@ public class Vista {
     System.out.println("Seleccione el tipo de trabajador:");
     System.out.println("1. Administrador");
     System.out.println("2. Empleado de Ventas");
-    System.out.println("3. Gerente");
     System.out.print("Opción: ");
     int tipo = leerEntero();
     
@@ -180,7 +179,6 @@ public class Vista {
     switch (tipo) {
         case 1 -> t = new Administrador( fechaIngreso, id, nombre, apPat, apMat, tipoDoc, numDoc, correo, telefono, direccion);
         case 2 -> t = new Empleado(fechaIngreso, id, nombre, apPat, apMat, tipoDoc, numDoc, correo, telefono, direccion);
-        case 3 -> t = new Gerente( fechaIngreso, id, nombre, apPat, apMat, tipoDoc, numDoc, correo, telefono, direccion);
         default -> {
             System.out.println("Tipo no válido. Registro cancelado.");
             return;
@@ -225,42 +223,7 @@ public class Vista {
         control.registrarProducto(p);
     }
 
-    // ===== MENÚ MATERIALES =====
-    public static void menuMateriales() {
-        int op;
-        do {
-            System.out.println("\n--- GESTIÓN DE MATERIALES ---");
-            System.out.println("1. Registrar material");
-            System.out.println("2. Listar materiales");
-            System.out.println("0. Volver");
-            System.out.print("Seleccione: ");
-            op = leerEntero();
-
-            switch (op) {
-                case 1 -> registrarMaterial();
-                case 2 -> control.listarMateriales();
-                case 0 -> {}
-                default -> System.out.println("Opción inválida.");
-            }
-        } while (op != 0);
-    }
-
-    public static void registrarMaterial() {
-        System.out.println("\n=== Registro de Material ===");
-        System.out.print("Nombre: ");
-        String nombre = sc.nextLine();
-        System.out.print("Cantidad disponible: ");
-        double cantidad = leerDouble();
-        System.out.print("Unidad de medida: ");
-        String unidad = sc.nextLine();
-        System.out.print("Costo unitario: ");
-        double costo = leerDouble();
-
-        Material m = new Material(nombre, cantidad, unidad, costo);
-        control.registrarMaterial(m);
-    }
-
-    // ===== MENÚ PEDIDOS =====
+    // ===== MENÚ VENTA =====
     public static void menuPedidos() {
         int op;
         do {
@@ -307,16 +270,8 @@ public class Vista {
             return;
         }
 
-        Pedido pedido = new Pedido(cliente, empleado, new Date());
+        Venta pedido = new Venta(cliente, empleado, new Date());
         control.registrarPedido(pedido);
-    }
-
-    // ===== REPORTES =====
-    public static void mostrarReporteGeneral() {
-        System.out.println("\n=== REPORTE GENERAL ===");
-        System.out.println("Clientes registrados: " + control.cantidadClientes());
-        System.out.println("Empleados registrados: " + control.cantidadTrabajadores());
-        System.out.println("Pedidos registrados: " + control.cantidadPedidos());
     }
 
     // ===== MÉTODOS AUXILIARES =====

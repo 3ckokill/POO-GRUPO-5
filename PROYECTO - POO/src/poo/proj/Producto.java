@@ -10,7 +10,6 @@ public class Producto {
     private String nombre;
     private String descripcion;
     private double precio;
-    private ArrayList<Material> materiales;
 
     // Constructor básico
     public Producto(String nombre, double precio) {

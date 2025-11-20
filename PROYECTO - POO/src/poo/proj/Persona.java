@@ -9,20 +9,16 @@ public abstract class Persona {
     protected String apellidoMaterno;
     protected String tipoDocumento;
     protected String numeroDocumento;
-    protected String correo;
     protected String telefono;
-    protected String direccion;
 
-    public Persona(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String tipoDocumento, String numeroDocumento, String correo, String telefono, String direccion) {
+    public Persona(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String tipoDocumento, String numeroDocumento, String telefono, String direccion) {
         this.id = contador++;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
-        this.correo = correo;
         this.telefono = telefono;
-        this.direccion = direccion;
     }
 
     public String getNombre() {
@@ -75,14 +71,6 @@ public abstract class Persona {
         this.numeroDocumento = numeroDocumento;
     }
 
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
     public String getTelefono() {
         return telefono;
     }
@@ -90,14 +78,5 @@ public abstract class Persona {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-    
     public abstract void mostrarDatos();
 }

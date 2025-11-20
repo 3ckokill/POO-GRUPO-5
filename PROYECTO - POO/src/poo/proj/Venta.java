@@ -3,7 +3,7 @@ package poo.proj;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Pedido {
+public class Venta {
 
     private static int contador = 1;
 
@@ -16,7 +16,7 @@ public class Pedido {
     private double total;
 
     // Constructor básico
-    public Pedido(Cliente cliente, Trabajador empleadoResponsable, Date fechaPedido) {
+    public Venta(Cliente cliente, Trabajador empleadoResponsable, Date fechaPedido) {
         this.idPedido = contador++;
         this.cliente = cliente;
         this.empleadoResponsable = empleadoResponsable;
