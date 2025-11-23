@@ -1,58 +1,143 @@
 package poo.proj;
 
-public abstract class Trabajador extends Persona {
+public abstract class Trabajador {
 
-    protected String cargo;
-    protected double salario;
-    protected String fechaIngreso;
+    private static int contadorId = 1;
 
-    public Trabajador(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String tipoDocumento, String numeroDocumento, String telefono, String direccion) {
-        super(id, nombre, apellidoPaterno, apellidoMaterno, tipoDocumento, numeroDocumento, telefono, direccion);
-    }
-    public String getCargo() {
-        return cargo;
-    }
+    protected int id;
+    protected String nombre;
+    protected String apellidoPaterno;
+    protected String apellidoMaterno;
+    protected String tipoDocumento;
+    protected String numeroDocumento;
+    protected double sueldoBase;
+    protected int horasExtra;
+    protected double pagoPorHoraExtra;
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
-
-    public double getSalario() {
-        return salario;
-    }
-
-    public void setSalario(double salario) {
-        this.salario = salario;
-    }
-
-    public String getFechaIngreso() {
-        return fechaIngreso;
+    public Trabajador(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String tipoDocumento, String numeroDocumento, double sueldoBase, int horasExtra, double pagoPorHoraExtra) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        setTipoDocumento(tipoDocumento);
+        setNumeroDocumento(numeroDocumento);
+        this.numeroDocumento = numeroDocumento;
+        this.sueldoBase = sueldoBase;
+        this.horasExtra = horasExtra;
+        this.pagoPorHoraExtra = pagoPorHoraExtra;
     }
 
-    public void setFechaIngreso(String fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
+    public static int getContadorId() {
+        return contadorId;
     }
 
-    public void registrarAsistencia() {
-        System.out.println(getNombreCompleto() + " ha registrado su asistencia.");
+    public static void setContadorId(int contadorId) {
+        Trabajador.contadorId = contadorId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        if(tipoDocumento.equalsIgnoreCase("DNI")|| tipoDocumento.equalsIgnoreCase("CE")){
+                this.tipoDocumento = tipoDocumento;
+        }
+        else {
+            System.out.println("Tipo de documento no valido");
+        }
+    }
+
+    public String getNumeroDocumento() {
+        return numeroDocumento;
+    }
+
+    public void setNumeroDocumento(String numeroDocumento) {
+        if("DNI".equalsIgnoreCase(this.numeroDocumento)&&numeroDocumento.length() == 8 ){
+             this.numeroDocumento = numeroDocumento;
+        }
+        else if("CE".equalsIgnoreCase(this.numeroDocumento)&&numeroDocumento.length() == 9 ){
+             this.numeroDocumento = numeroDocumento;
+        }
+        else {
+            System.out.println("Numero de documento no valido");
+        }
+    }
+
+    public double getSueldoBase() {
+        return sueldoBase;
+    }
+
+    public void setSueldoBase(double sueldoBase) {
+        this.sueldoBase = sueldoBase;
+    }
+
+    public int getHorasExtra() {
+        return horasExtra;
+    }
+
+    public void setHorasExtra(int horasExtra) {
+        this.horasExtra = horasExtra;
+    }
+
+    public double getPagoPorHoraExtra() {
+        return pagoPorHoraExtra;
+    }
+
+    public void setPagoPorHoraExtra(double pagoPorHoraExtra) {
+        this.pagoPorHoraExtra = pagoPorHoraExtra;
+    }
+     public double calcularSueldoTotal() {
+        return sueldoBase + (horasExtra * pagoPorHoraExtra);
     }
     
-    @Override
-    public void mostrarDatos() {
-        System.out.println("=== Datos del Empleado ===");
+    public String nombreCompleto(){
+        return "Nombre: " + this.nombre +" "+ this.apellidoPaterno + " " + this.apellidoMaterno;
+    }
+    
+    public void mostrarDatos(){
+        
         System.out.println("ID: " + id);
-        System.out.println("Nombre: " + getNombreCompleto());
-        System.out.println("Documento: " + tipoDocumento + " " + numeroDocumento);
-        System.out.println("Cargo: " + cargo);
-        System.out.println("Salario: S/." + salario);
-        System.out.println("Fecha de Ingreso: " + fechaIngreso);
-        System.out.println("Correo: " + correo);
-        System.out.println("Teléfono: " + telefono);
-        System.out.println("Dirección: " + direccion);
+        nombreCompleto();
+        System.out.println("Tipo de Documento: " + tipoDocumento );
+        System.out.println("Numero de Documento: " + numeroDocumento );
+        System.out.println("Sueldo Base: " + sueldoBase);
+        System.out.println("Horas Extra: " + horasExtra);
+        System.out.println("Pago por Hora Extra: " + pagoPorHoraExtra);
+        System.out.println("Sueldo Total: " + calcularSueldoTotal());
     }
+     
     
-    
-    
-    
-
 }
