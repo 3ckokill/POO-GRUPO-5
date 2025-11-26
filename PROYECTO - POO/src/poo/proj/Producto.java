@@ -1,39 +1,23 @@
 package poo.proj;
 
-import java.util.ArrayList;
-
 public class Producto {
 
-    private static int contador = 1;
+    private static int contadorId = 1;
 
-    private int idProducto;
+    private int id;
     private String nombre;
-    private String descripcion;
     private double precio;
-    private ArrayList<Material> materiales;
+    private int stock;
 
-    // Constructor básico
-    public Producto(String nombre, double precio) {
-        this.idProducto = contador++;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.descripcion = "";
-        this.materiales = new ArrayList<>();
+    public Producto(String nombre, double precio, int stock) {
+        this.id = contadorId++;
+        setNombre(nombre);
+        setPrecio(precio);
+        setStock(stock);
     }
 
-    // Constructor completo
-    public Producto(String nombre, String descripcion, double precio) {
-        this(nombre, precio);
-        this.descripcion = descripcion;
-    }
-
-    // Getters y Setters
-    public int getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
+    public int getId() {
+        return id;
     }
 
     public String getNombre() {
@@ -41,15 +25,10 @@ public class Producto {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre del producto no puede estar vacío");
+        }
+        this.nombre = nombre.trim();
     }
 
     public double getPrecio() {
@@ -57,54 +36,27 @@ public class Producto {
     }
 
     public void setPrecio(double precio) {
-        if (precio >= 0) {
-            this.precio = precio;
-        } else {
-            System.out.println("El precio no puede ser negativo.");
+        if (precio < 0) {
+            throw new IllegalArgumentException("El precio no puede ser negativo");
         }
+        this.precio = precio;
     }
 
-    public ArrayList<Material> getMateriales() {
-        return materiales;
+    public int getStock() {
+        return stock;
     }
 
-    public void setMateriales(ArrayList<Material> materiales) {
-        this.materiales = materiales;
-    }
-
-    // Métodos funcionales
-    public void agregarMaterial(Material material) {
-        if (material != null) {
-            materiales.add(material);
+    public void setStock(int stock) {
+        if (stock < 0) {
+            throw new IllegalArgumentException("El stock no puede ser negativo");
         }
-    }
-
-    public void eliminarMaterial(Material material) {
-        materiales.remove(material);
-    }
-
-    public double calcularCostoProduccion() {
-        double costo = 0.0;
-        for (Material m : materiales) {
-            costo += m.getCostoUnitario();
-        }
-        return costo;
+        this.stock = stock;
     }
 
     public void mostrarDatos() {
-        System.out.println("=== PRODUCTO ===");
-        System.out.println("ID: " + idProducto);
+        System.out.println("ID Producto: " + id);
         System.out.println("Nombre: " + nombre);
-        System.out.println("Descripción: " + descripcion);
-        System.out.println("Precio: S/." + precio);
-        System.out.println("Materiales utilizados:");
-        if (materiales.isEmpty()) {
-            System.out.println("   - Ninguno");
-        } else {
-            for (Material m : materiales) {
-                System.out.println("   - " + m.getNombre() + " (S/." + m.getCostoUnitario() + ")");
-            }
-        }
-        System.out.println("===================");
+        System.out.println("Precio: " + precio);
+        System.out.println("Stock: " + stock);
     }
 }

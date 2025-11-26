@@ -4,171 +4,43 @@ import java.util.ArrayList;
 
 public class Controlador {
 
-    private ArrayList<Cliente> clientes;
-    private ArrayList<Trabajador> trabajadores;
-    private ArrayList<Producto> productos;
-    private ArrayList<Material> materiales;
-    private ArrayList<Pedido> pedidos;
+    private ArrayList<Administrador> administradores = new ArrayList<>();
+    private ArrayList<EmpleadoVentas> empleados = new ArrayList<>();
+    private ArrayList<Producto> productos = new ArrayList<>();
+    private ArrayList<Venta> ventas = new ArrayList<>();
 
-    // Constructor
-    public Controlador() {
-        clientes = new ArrayList<>();
-        trabajadores = new ArrayList<>();
-        productos = new ArrayList<>();
-        materiales = new ArrayList<>();
-        pedidos = new ArrayList<>();
+    // Métodos para registrar, listar, buscar, etc.
+
+    public void registrarEmpleado(EmpleadoVentas emp) {
+        empleados.add(emp);
     }
 
-    //  MÉTODOS PARA CLIENTES 
-    public void registrarCliente(Cliente c) {
-        Cliente clienteExistente = buscarClientePorDNI(c.getNumeroDocumento());
-        if (clienteExistente != null) {
-        System.out.println("Error: Ya existe un cliente con el DNI " + c.getNumeroDocumento());
-        } else {
-        clientes.add(c);
-        System.out.println("Cliente registrado correctamente: " + c.getNombre());
-        }
+    public void registrarAdministrador(Administrador admin) {
+        administradores.add(admin);
     }
 
-    public Cliente buscarClientePorDNI(String dni) {
-        for (Cliente c : clientes) {
-            if (c.getNumeroDocumento().equals(dni)) {
-                return c; // Lo encontró, lo devuelve
-            }
-        }
-        // System.out.println("Cliente no encontrado."); // <-- BORRA O COMENTA ESTA LÍNEA
-        return null; // Si no lo encuentra, solo retorna null
+    public void registrarProducto(Producto prod) {
+        productos.add(prod);
     }
 
-    public void listarClientes() {
-        System.out.println("=== LISTA DE CLIENTES ===");
-        for (Cliente c : clientes) {
-            c.mostrarDatos();
-        }
+    public void registrarVenta(Venta venta) {
+        ventas.add(venta);
     }
 
-    public void eliminarCliente(String dni) {
-        Cliente cliente = buscarClientePorDNI(dni);
-        if (cliente != null) {
-            clientes.remove(cliente);
-            System.out.println("Cliente eliminado correctamente.");
-        }
-    }
-
-    // MÉTODOS PARA TRABAJADORES
-    public void registrarEmpleado(Trabajador e) {
-        trabajadores.add(e);
-        System.out.println("Empleado registrado correctamente: " + e.getNombre());
-    }
-
-    public Trabajador buscarTrabajadorPorDNI(String dni) {
-        for (Trabajador t : trabajadores) {
-            if (t.getNumeroDocumento().equals(dni)) {
-                return t;
-            }
-        }
-        return null;
-    }
-
-    public void listarTrabajadores() {
-        System.out.println("=== LISTA DE EMPLEADOS ===");
-        for (Trabajador e : trabajadores) {
+    public void mostrarEmpleados() {
+        for (EmpleadoVentas e : empleados) {
             e.mostrarDatos();
+            System.out.println("----------------------");
         }
     }
 
-    public void eliminarTrabajador(String dni) {
-    Trabajador trabajador = buscarTrabajadorPorDNI(dni);
-    if (trabajador != null) {
-        trabajadores.remove(trabajador);
-        System.out.println("Trabajador eliminado correctamente.");
-         } else {
-        System.out.println("Trabajador no encontrado.");
-      }
-    }   
-
-    //  MÉTODOS PARA PRODUCTOS 
-    public void registrarProducto(Producto p) {
-        productos.add(p);
-        System.out.println("Producto registrado correctamente: " + p.getNombre());
-    }
-
-    public void listarProductos() {
-        System.out.println("=== CATÁLOGO DE PRODUCTOS ===");
-        for (Producto p : productos) {
-            p.mostrarDatos();
+    public void mostrarVentas() {
+        for (Venta v : ventas) {
+            v.mostrarDatos();
+            System.out.println("----------------------");
         }
     }
 
-    //  MÉTODOS PARA MATERIALES 
-    public void registrarMaterial(Material m) {
-        materiales.add(m);
-        System.out.println("Material registrado: " + m.getNombre());
-    }
+    // Más métodos según necesites
 
-    public void listarMateriales() {
-        System.out.println("=== LISTA DE MATERIALES ===");
-        for (Material m : materiales) {
-            m.mostrarDatos();
-        }
-    }
-
- 
-    public void registrarPedido(Pedido p) {
-        pedidos.add(p);
-        System.out.println("Pedido registrado correctamente. ID: " + p.getIdPedido());
-    }
-
-    public void listarPedidos() {
-        System.out.println("=== LISTA DE PEDIDOS ===");
-        if (pedidos.isEmpty()) {
-            System.out.println("No hay pedidos registrados.");
-            return;
-        }
-        for (Pedido p : pedidos) {
-            p.mostrarDatos();
-        }
-    }
-    
-    public void listarPedidosPorCliente(String dniCliente) {
-        System.out.println("=== PEDIDOS DEL CLIENTE " + dniCliente + " ===");
-        boolean encontrados = false;
-        for (Pedido p : pedidos) {
-            // Obtenemos el cliente del pedido y comparamos su DNI
-            if (p.getCliente().getNumeroDocumento().equals(dniCliente)) {
-                p.mostrarDatos();
-                encontrados = true;
-            }
-        }if (!encontrados) {
-            System.out.println("El cliente no tiene pedidos registrados.");
-        }
-    }
-
-    public Pedido buscarPedidoPorId(int id) {
-        for (Pedido p : pedidos) {
-            if (p.getIdPedido() == id) {
-                return p;
-            }
-        }
-        System.out.println("Pedido no encontrado.");
-        return null;
-    }    
-    // GETTER PARA LA LISTA
-    
-    public ArrayList<Trabajador> getTrabajadores() {
-        return trabajadores;
-    }
-
-    // MÉTODOS AUXILIARES 
-    public int cantidadClientes() {
-        return clientes.size();
-    }
-
-    public int cantidadTrabajadores() {
-        return trabajadores.size();
-    }
-
-    public int cantidadPedidos() {
-        return pedidos.size();
-    }
 }
