@@ -15,17 +15,27 @@ public class EmpleadoVentas extends Trabajador {
         super.mostrarDatos();
     }
 
-void registrarVenta(Controlador controlador, int idProd, int cant) {
+void registrarVenta(Controlador controlador, String nombreProd, int cant) {
+
     if (controlador == null) {
         throw new IllegalArgumentException("Controlador no puede ser nulo");
     }
-    Producto prod = controlador.buscarProductoPorId(idProd);
+
+    // Buscar producto por nombre
+    Producto prod = controlador.buscarProductoPorNombre(nombreProd);
+
     if (prod == null) {
-        throw new IllegalArgumentException("Producto con ID " + idProd + " no encontrado");
+        throw new IllegalArgumentException("Producto '" + nombreProd + "' no encontrado");
+    }
+
+    if (cant <= 0) {
+        throw new IllegalArgumentException("La cantidad debe ser mayor que cero");
     }
 
     if (prod.getStock() < cant) {
-        throw new IllegalArgumentException("Stock insuficiente. Stock disponible: " + prod.getStock());
+        throw new IllegalArgumentException(
+            "Stock insuficiente. Stock disponible: " + prod.getStock()
+        );
     }
 
     // Crear la venta
@@ -37,8 +47,12 @@ void registrarVenta(Controlador controlador, int idProd, int cant) {
     // Registrar venta en el controlador
     controlador.registrarVenta(venta);
 
-    System.out.println("Venta registrada por " + nombreCompleto() + " -> Producto: " + prod.getNombre() + 
-                       ", Cantidad: " + cant + ", Total: " + venta.getTotal());
+    System.out.println(
+        "Venta registrada por " + nombreCompleto() +
+        " -> Producto: " + prod.getNombre() +
+        ", Cantidad: " + cant +
+        ", Total: " + venta.getTotal()
+    );
 }
 
 }

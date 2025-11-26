@@ -19,37 +19,65 @@ public class LoginWindow extends JFrame {
         this.controlador = controlador;
 
         setTitle("Login del Sistema");
-        setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // -----------------------------
+        // TAMAÑO: 50% DE LA PANTALLA
+        // -----------------------------
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) (screen.width * 0.50);
+        int height = (int) (screen.height * 0.50);
+        setSize(width, height);
         setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
+        // -----------------------------
+        // PANEL PRINCIPAL CENTRADO
+        // -----------------------------
+        JPanel panelCentral = new JPanel(new GridBagLayout());
+        panelCentral.setBackground(new Color(200, 210, 220)); // fondo gris suave
 
+        JPanel panelContenido = new JPanel(new GridLayout(5, 2, 15, 15));
+        panelContenido.setPreferredSize(new Dimension(350, 220));
+        panelContenido.setBackground(new Color(200, 210, 220)); // panel contenido claro
+
+        // -----------------------------
+        // CAMPOS DE TEXTO
+        // -----------------------------
         JTextField txtNombre = new JTextField();
         JTextField txtApP = new JTextField();
         JTextField txtApM = new JTextField();
         JTextField txtDoc = new JTextField();
 
-        JButton btnLoginAdmin = new JButton("Ingresar como Administrador");
-        JButton btnLoginEmpleado = new JButton("Ingresar como Empleado Ventas");
+        // Colores de los labels
+        Color labelColor = new Color(30, 30, 60); // azul oscuro
 
-        panel.add(new JLabel("Nombre:"));
-        panel.add(txtNombre);
-        panel.add(new JLabel("Apellido Paterno:"));
-        panel.add(txtApP);
-        panel.add(new JLabel("Apellido Materno:"));
-        panel.add(txtApM);
-        panel.add(new JLabel("Documento:"));
-        panel.add(txtDoc);
+        panelContenido.add(crearLabel("Nombre:", labelColor));
+        panelContenido.add(txtNombre);
+        panelContenido.add(crearLabel("Apellido Paterno:", labelColor));
+        panelContenido.add(txtApP);
+        panelContenido.add(crearLabel("Apellido Materno:", labelColor));
+        panelContenido.add(txtApM);
+        panelContenido.add(crearLabel("Documento:", labelColor));
+        panelContenido.add(txtDoc);
 
-        panel.add(btnLoginAdmin);
-        panel.add(btnLoginEmpleado);
+        // -----------------------------
+        // BOTONES ESTÉTICOS
+        // -----------------------------
+        JButton btnLoginAdmin = crearBoton("Ingresar como Administrador", new Color(100, 180, 255));
+        JButton btnLoginEmpleado = crearBoton("Ingresar como Empleado Ventas", new Color(100, 255, 180));
 
-        add(panel);
+        panelContenido.add(btnLoginAdmin);
+        panelContenido.add(btnLoginEmpleado);
 
+        panelCentral.add(panelContenido);
+        add(panelCentral);
+
+        // -----------------------------
+        // LOGICA BOTONES
+        // -----------------------------
         btnLoginAdmin.addActionListener(e -> {
             Administrador admin = controlador.validarAdministrador(
-                txtNombre.getText(), txtApP.getText(), txtApM.getText(), txtDoc.getText()
+                    txtNombre.getText(), txtApP.getText(), txtApM.getText(), txtDoc.getText()
             );
 
             if (admin != null) {
@@ -63,7 +91,7 @@ public class LoginWindow extends JFrame {
 
         btnLoginEmpleado.addActionListener(e -> {
             EmpleadoVentas emp = controlador.validarEmpleado(
-                txtNombre.getText(), txtApP.getText(), txtApM.getText(), txtDoc.getText()
+                    txtNombre.getText(), txtApP.getText(), txtApM.getText(), txtDoc.getText()
             );
 
             if (emp != null) {
@@ -75,5 +103,38 @@ public class LoginWindow extends JFrame {
             }
         });
     }
-}
 
+    // ==========================
+    // MÉTODO AUXILIAR: LABEL
+    // ==========================
+    private JLabel crearLabel(String texto, Color color) {
+        JLabel label = new JLabel(texto);
+        label.setForeground(color);
+        label.setFont(new Font("Arial", Font.BOLD, 14));
+        return label;
+    }
+
+    // ==========================
+    // MÉTODO AUXILIAR: BOTÓN ESTÉTICO
+    // ==========================
+    private JButton crearBoton(String texto, Color colorBase) {
+        JButton boton = new JButton(texto);
+        boton.setBackground(colorBase);
+        boton.setForeground(Color.WHITE);
+        boton.setFocusPainted(false);
+        boton.setFont(new Font("Arial", Font.BOLD, 13));
+        boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        boton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1, true));
+
+        boton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                boton.setBackground(colorBase.darker());
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                boton.setBackground(colorBase);
+            }
+        });
+
+        return boton;
+    }
+}

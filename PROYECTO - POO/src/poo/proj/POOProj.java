@@ -13,7 +13,7 @@ public class POOProj {
         );
 
         EmpleadoVentas emp = new EmpleadoVentas(
-            "Vendedor", "Paterno", "Materno", "DNI", "87654321", 1500.0, 0, 0.0
+            "rafael", "alonzo", "rabanal", "DNI", "87654321", 1500.0, 0, 0.0
         );
 
         controlador.registrarAdministrador(admin);
