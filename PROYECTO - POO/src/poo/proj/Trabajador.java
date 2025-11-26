@@ -105,7 +105,7 @@ public abstract class Trabajador {
     }
 
     public void setSueldoBase(double sueldoBase) {
-        if (sueldoBase < 0) {
+        if (sueldoBase <= 0) {
             throw new IllegalArgumentException("Sueldo base no puede ser negativo");
         }
             this.sueldoBase = sueldoBase;

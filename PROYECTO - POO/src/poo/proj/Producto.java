@@ -35,8 +35,8 @@ public class Producto {
         return precio;
     }
 
-    public void setPrecio(double precio) {
-        if (precio < 0) {
+    public void setPrecio(double precio) {   
+        if (precio <= 0) {
             throw new IllegalArgumentException("El precio no puede ser negativo");
         }
         this.precio = precio;
@@ -52,7 +52,6 @@ public class Producto {
         }
         this.stock = stock;
     }
-
     public void mostrarDatos() {
         System.out.println("ID Producto: " + id);
         System.out.println("Nombre: " + nombre);
