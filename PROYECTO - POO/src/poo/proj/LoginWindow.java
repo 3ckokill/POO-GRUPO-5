@@ -18,8 +18,13 @@ public class LoginWindow extends JFrame {
     public LoginWindow(Controlador controlador) {
         this.controlador = controlador;
 
-        setTitle("Login del Sistema");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // -----------------------------
+        // ICONO DE LA VENTANA (esquina superior izquierda)
+        // -----------------------------
+        ImageIcon iconoVentana = new ImageIcon(getClass().getResource("/poo/proj/resources/logo.png"));
+        Image iconoEscalado = iconoVentana.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+        setIconImage(iconoEscalado);
+        setTitle("Sistema Imprenta Halo");
 
         // -----------------------------
         // TAMAÑO: 50% DE LA PANTALLA
@@ -29,27 +34,34 @@ public class LoginWindow extends JFrame {
         int height = (int) (screen.height * 0.50);
         setSize(width, height);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // -----------------------------
-        // PANEL PRINCIPAL CENTRADO
+        // PANEL SUPERIOR: botón Cerrar Sesión
+        // -----------------------------
+        JPanel panelTop = new JPanel(new BorderLayout());
+        panelTop.setBackground(new Color(200, 210, 220));
+        JButton btnCerrarSesion = crearBoton("Cerrar Sesión", new Color(255, 100, 100));
+        panelTop.add(btnCerrarSesion, BorderLayout.EAST);
+        add(panelTop, BorderLayout.NORTH);
+
+        // -----------------------------
+        // PANEL CENTRAL: contenido + logo
         // -----------------------------
         JPanel panelCentral = new JPanel(new GridBagLayout());
         panelCentral.setBackground(new Color(200, 210, 220)); // fondo gris suave
 
+        // Panel contenido (izquierda)
         JPanel panelContenido = new JPanel(new GridLayout(5, 2, 15, 15));
         panelContenido.setPreferredSize(new Dimension(350, 220));
-        panelContenido.setBackground(new Color(200, 210, 220)); // panel contenido claro
+        panelContenido.setBackground(new Color(200, 210, 220));
 
-        // -----------------------------
-        // CAMPOS DE TEXTO
-        // -----------------------------
+        // Campos de texto
         JTextField txtNombre = new JTextField();
         JTextField txtApP = new JTextField();
         JTextField txtApM = new JTextField();
         JTextField txtDoc = new JTextField();
-
-        // Colores de los labels
-        Color labelColor = new Color(30, 30, 60); // azul oscuro
+        Color labelColor = new Color(30, 30, 60);
 
         panelContenido.add(crearLabel("Nombre:", labelColor));
         panelContenido.add(txtNombre);
@@ -60,17 +72,33 @@ public class LoginWindow extends JFrame {
         panelContenido.add(crearLabel("Documento:", labelColor));
         panelContenido.add(txtDoc);
 
-        // -----------------------------
-        // BOTONES ESTÉTICOS
-        // -----------------------------
+        // Botones de login
         JButton btnLoginAdmin = crearBoton("Ingresar como Administrador", new Color(100, 180, 255));
         JButton btnLoginEmpleado = crearBoton("Ingresar como Empleado Ventas", new Color(100, 255, 180));
-
         panelContenido.add(btnLoginAdmin);
         panelContenido.add(btnLoginEmpleado);
 
-        panelCentral.add(panelContenido);
-        add(panelCentral);
+        // Panel logo (derecha)
+        JPanel panelLogo = new JPanel();
+        panelLogo.setBackground(new Color(200, 210, 220));
+        ImageIcon icono = new ImageIcon(getClass().getResource("/poo/proj/resources/logo.png"));
+        icono = new ImageIcon(icono.getImage().getScaledInstance(500, 500, Image.SCALE_SMOOTH));
+        JLabel lblLogo = new JLabel(icono);
+        panelLogo.add(lblLogo);
+
+        // -----------------------------
+        // UBICACIÓN CON GRIDBAG
+        // -----------------------------
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(10, 10, 10, 10);
+        panelCentral.add(panelContenido, gbc);
+
+        gbc.gridx = 1; // derecha
+        panelCentral.add(panelLogo, gbc);
+
+        add(panelCentral, BorderLayout.CENTER);
 
         // -----------------------------
         // LOGICA BOTONES
@@ -100,6 +128,18 @@ public class LoginWindow extends JFrame {
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Datos incorrectos para Empleado");
+            }
+        });
+
+        btnCerrarSesion.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Desea cerrar la aplicación?",
+                    "Cerrar Sesión",
+                    JOptionPane.YES_NO_OPTION
+            );
+            if (confirm == JOptionPane.YES_OPTION) {
+                System.exit(0);
             }
         });
     }
