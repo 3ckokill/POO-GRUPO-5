@@ -9,6 +9,10 @@ private ArrayList<Administrador> administradores = new ArrayList<>();
     private ArrayList<Producto> productos = new ArrayList<>();
     private ArrayList<Venta> ventas = new ArrayList<>();
     
+    public ArrayList<EmpleadoVentas> getEmpleados() {
+    return empleados;
+    }
+    
     public ArrayList<Producto> getProductos() {
     return productos;
     }

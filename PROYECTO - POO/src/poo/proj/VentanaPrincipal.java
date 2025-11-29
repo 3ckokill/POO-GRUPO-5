@@ -55,15 +55,18 @@ public class VentanaPrincipal extends JFrame {
     // ============================================================
     // PANEL ADMINISTRADOR
     // ============================================================
-    private JPanel panelAdministrador() {
+private JPanel panelAdministrador() {
+
     JPanel panelPrincipal = new JPanel(new BorderLayout());
     panelPrincipal.setBackground(new Color(245, 245, 250));
+
+    // Icono y titulo
     ImageIcon iconoVentana = new ImageIcon(getClass().getResource("/poo/proj/resources/logo.png"));
-    // Opcional: escalar si quieres
     Image iconoEscalado = iconoVentana.getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH);
     setIconImage(iconoEscalado);
-    setTitle("Sistema Admistración");
-    // Panel izquierdo: botones
+    setTitle("Sistema Administración");
+
+    // ================= PANEL IZQUIERDO =================
     JPanel panelIzquierda = new JPanel();
     panelIzquierda.setLayout(new BoxLayout(panelIzquierda, BoxLayout.Y_AXIS));
     panelIzquierda.setPreferredSize(new Dimension(200, getHeight()));
@@ -72,6 +75,7 @@ public class VentanaPrincipal extends JFrame {
     JButton btnTrabajador = crearBotonAdmin("Registrar Trabajador", new Color(100, 180, 255));
     JButton btnProducto = crearBotonAdmin("Registrar Producto", new Color(100, 255, 180));
     JButton btnStock = crearBotonAdmin("Ver Productos", new Color(255, 180, 100));
+    JButton btnVerTrabajadores = crearBotonAdmin("Ver Trabajadores", new Color(180, 140, 255));
     JButton btnCerrarSesion = crearBotonAdmin("Salir", new Color(255, 100, 100));
 
     panelIzquierda.add(Box.createVerticalStrut(30));
@@ -80,10 +84,12 @@ public class VentanaPrincipal extends JFrame {
     panelIzquierda.add(btnProducto);
     panelIzquierda.add(Box.createVerticalStrut(15));
     panelIzquierda.add(btnStock);
+    panelIzquierda.add(Box.createVerticalStrut(15));
+    panelIzquierda.add(btnVerTrabajadores);
     panelIzquierda.add(Box.createVerticalGlue());
     panelIzquierda.add(btnCerrarSesion);
 
-    // Panel derecho: contenido dinámico
+    // ================= PANEL DERECHO =================
     JPanel panelDerecha = new JPanel(new BorderLayout());
     panelDerecha.setBackground(new Color(245, 245, 250));
 
@@ -94,7 +100,8 @@ public class VentanaPrincipal extends JFrame {
 
     panelPrincipal.add(splitPane, BorderLayout.CENTER);
 
-    // Acciones botones
+    // ================= EVENTOS =================
+
     btnTrabajador.addActionListener(e -> {
         panelDerecha.removeAll();
         panelDerecha.add(crearPanelRegistrarTrabajador(), BorderLayout.CENTER);
@@ -116,13 +123,24 @@ public class VentanaPrincipal extends JFrame {
         panelDerecha.repaint();
     });
 
+    // ========= VER TRABAJADORES =========
+    btnVerTrabajadores.addActionListener(e -> {
+    panelDerecha.removeAll();
+    panelDerecha.add(crearPanelVerTrabajadores(), BorderLayout.CENTER);
+    panelDerecha.revalidate();
+    panelDerecha.repaint();
+});
+
+    // ========= CERRAR SESIÓN =========
     btnCerrarSesion.addActionListener(e -> {
+
         int confirm = JOptionPane.showConfirmDialog(
                 null,
                 "¿Desea cerrar sesión?",
                 "Cerrar Sesión",
                 JOptionPane.YES_NO_OPTION
         );
+
         if (confirm == JOptionPane.YES_OPTION) {
             dispose();
             new LoginWindow(controlador).setVisible(true);
@@ -131,8 +149,120 @@ public class VentanaPrincipal extends JFrame {
 
     return panelPrincipal;
 }
+private JPanel crearPanelVerTrabajadores() {
 
+    JPanel panel = new JPanel(new BorderLayout());
+    panel.setBackground(new Color(200, 210, 220));
 
+    String[] columnas = {"Nombre", "Apellido P.", "Apellido M.", "Documento", "Sueldo"};
+
+    DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
+        @Override
+        public boolean isCellEditable(int row, int col) {
+            return false;
+        }
+    };
+
+    JTable tabla = new JTable(modelo);
+
+    actualizarTablaTrabajadores(modelo);
+
+    JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
+    JButton btnEditar = new JButton("Editar");
+    JButton btnEliminar = new JButton("Eliminar");
+
+    btnEditar.setBackground(new Color(100, 180, 255));
+    btnEditar.setForeground(Color.WHITE);
+    btnEliminar.setBackground(new Color(255, 100, 100));
+    btnEliminar.setForeground(Color.WHITE);
+
+    panelBotones.add(btnEditar);
+    panelBotones.add(btnEliminar);
+
+    panel.add(new JScrollPane(tabla), BorderLayout.CENTER);
+    panel.add(panelBotones, BorderLayout.SOUTH);
+
+    // ==================== BOTÓN EDITAR ====================
+    btnEditar.addActionListener(e -> {
+
+        int fila = tabla.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un trabajador.");
+            return;
+        }
+
+        EmpleadoVentas emp = controlador.getEmpleados().get(fila);
+
+        JTextField txtNombre = new JTextField(emp.getNombre());
+        JTextField txtApP = new JTextField(emp.getApellidoPaterno());
+        JTextField txtApM = new JTextField(emp.getApellidoMaterno());
+        JTextField txtDoc = new JTextField(emp.getNumeroDocumento());
+        JTextField txtSueldo = new JTextField(String.valueOf(emp.getSueldoBase()));
+
+        Object[] msg = {
+                "Nombre:", txtNombre,
+                "Apellido Paterno:", txtApP,
+                "Apellido Materno:", txtApM,
+                "Documento:", txtDoc,
+                "Sueldo:", txtSueldo
+        };
+
+        int opcion = JOptionPane.showConfirmDialog(null, msg, "Editar Trabajador", JOptionPane.OK_CANCEL_OPTION);
+
+        if (opcion == JOptionPane.OK_OPTION) {
+            try {
+
+                emp.setNombre(txtNombre.getText());
+                emp.setApellidoPaterno(txtApP.getText());
+                emp.setApellidoMaterno(txtApM.getText());
+                emp.setNumeroDocumento(txtDoc.getText());
+                emp.setSueldoBase(Double.parseDouble(txtSueldo.getText()));
+
+                actualizarTablaTrabajadores(modelo);
+                JOptionPane.showMessageDialog(null, "Trabajador actualizado.");
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+            }
+        }
+    });
+
+    // ==================== BOTÓN ELIMINAR ====================
+    btnEliminar.addActionListener(e -> {
+
+        int fila = tabla.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un trabajador.");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(null,
+                "¿Eliminar trabajador?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            controlador.getEmpleados().remove(fila);
+            actualizarTablaTrabajadores(modelo);
+        }
+    });
+
+    return panel;
+}
+
+private void actualizarTablaTrabajadores(DefaultTableModel modelo) {
+    modelo.setRowCount(0);
+
+    for (EmpleadoVentas emp : controlador.getEmpleados()) {
+        modelo.addRow(new Object[]{
+                emp.getNombre(),
+                emp.getApellidoPaterno(),
+                emp.getApellidoMaterno(),
+                emp.getNumeroDocumento(),
+                emp.getSueldoBase()
+        });
+    }
+}
 // ==============================
 // MÉTODO AUXILIAR: Botones estilizados
 // ==============================
