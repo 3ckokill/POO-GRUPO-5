@@ -1,0 +1,50 @@
+DROP DATABASE IF EXISTS sistema_ventas;
+CREATE DATABASE sistema_ventas;
+USE sistema_ventas;
+
+-- Tabla: trabajadores (SIN PASSWORD)
+CREATE TABLE trabajadores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    ap_paterno VARCHAR(100) NOT NULL,
+    ap_materno VARCHAR(100) NOT NULL,
+    tipo_doc VARCHAR(20) NOT NULL,
+    num_doc VARCHAR(20) UNIQUE NOT NULL,
+    sueldo DOUBLE NOT NULL,
+    rol VARCHAR(20) NOT NULL -- 'ADMIN' o 'VENDEDOR'
+);
+
+-- Tabla: productos
+CREATE TABLE productos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    precio DOUBLE NOT NULL,
+    stock INT NOT NULL
+);
+
+-- Tabla: ventas
+CREATE TABLE ventas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    producto_id INT NOT NULL,
+    cantidad INT NOT NULL,
+    total DOUBLE NOT NULL,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (producto_id) REFERENCES productos(id) ON DELETE CASCADE
+);
+
+USE sistema_ventas;
+ALTER TABLE trabajadores ADD COLUMN horas_extra INT DEFAULT 0;
+-- No guardamos el precio por hora en BD porque dijiste que siempre sea 5 fijo.
+
+-- USUARIOS INICIALES (Sin columna password)
+INSERT INTO trabajadores (nombre, ap_paterno, ap_materno, tipo_doc, num_doc, sueldo, rol) 
+VALUES ('Juan', 'Admin', 'Sistema', 'DNI', '11111111', 3000.00, 'ADMIN');
+
+INSERT INTO trabajadores (nombre, ap_paterno, ap_materno, tipo_doc, num_doc, sueldo, rol) 
+VALUES ('Maria', 'Ventas', 'Local', 'DNI', '22222222', 1200.00, 'VENDEDOR');
+
+-- PRODUCTOS
+INSERT INTO productos (nombre, precio, stock) VALUES 
+('Lapicero Azul', 1.50, 100),
+('Cuaderno A4', 5.00, 50),
+('Plumón Pizarra', 3.00, 30);

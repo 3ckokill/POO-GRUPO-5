@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
+              name="ReporteVentas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e9e30566-0683-4a12-8874-42c22f036573">
+    
+    <queryString>
+        <![CDATA[SELECT p.nombre as prod_nombre, v.cantidad, v.total, v.fecha_registro 
+                 FROM ventas v 
+                 INNER JOIN productos p ON v.producto_id = p.id 
+                 ORDER BY v.fecha_registro DESC]]>
+    </queryString>
+
+    <field name="prod_nombre" class="java.lang.String"/>
+    <field name="cantidad" class="java.lang.Integer"/>
+    <field name="total" class="java.lang.Double"/>
+    <field name="fecha_registro" class="java.sql.Timestamp"/>
+
+    <variable name="SumaTotal" class="java.lang.Double" calculation="Sum">
+        <variableExpression><![CDATA[$F{total}]]></variableExpression>
+    </variable>
+
+    <title>
+        <band height="79" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="20" width="555" height="40" uuid="09f3c7e0-22c6-4702-8a96-6b2230107297"/>
+                <textElement textAlignment="Center">
+                    <font size="24" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Reporte de Ventas]]></text>
+            </staticText>
+        </band>
+    </title>
+
+    <columnHeader>
+        <band height="30" splitType="Stretch">
+            <staticText>
+                <reportElement x="0" y="0" width="200" height="30" uuid="c1c5e533-5c8e-4f16-95f0-6c9a3044a2a1"/>
+                <box leftPadding="5"><bottomPen lineWidth="1.0"/></box>
+                <textElement verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Producto]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="200" y="0" width="100" height="30" uuid="a2a5e533-5c8e-4f16-95f0-6c9a3044a2a2"/>
+                <box><bottomPen lineWidth="1.0"/></box>
+                <textElement textAlignment="Center" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Cantidad]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="300" y="0" width="100" height="30" uuid="b3b5e533-5c8e-4f16-95f0-6c9a3044a2a3"/>
+                <box><bottomPen lineWidth="1.0"/></box>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Total (S/.)]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="400" y="0" width="155" height="30" uuid="c4c5e533-5c8e-4f16-95f0-6c9a3044a2a4"/>
+                <box><bottomPen lineWidth="1.0"/></box>
+                <textElement textAlignment="Center" verticalAlignment="Middle"><font isBold="true"/></textElement>
+                <text><![CDATA[Fecha]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="30" splitType="Stretch">
+            <textField>
+                <reportElement x="0" y="0" width="200" height="30" uuid="d1d5e533-5c8e-4f16-95f0-6c9a3044a2a5"/>
+                <box leftPadding="5"/>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{prod_nombre}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="200" y="0" width="100" height="30" uuid="e2e5e533-5c8e-4f16-95f0-6c9a3044a2a6"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00">
+                <reportElement x="300" y="0" width="100" height="30" uuid="f3f5e533-5c8e-4f16-95f0-6c9a3044a2a7"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="400" y="0" width="155" height="30" uuid="a4a5e533-5c8e-4f16-95f0-6c9a3044a2a8"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{fecha_registro}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <summary>
+        <band height="50">
+            <line>
+                <reportElement x="0" y="5" width="555" height="1" uuid="f5f5e533-5c8e-4f16-95f0-6c9a3044a2b1"/>
+            </line>
+
+            <staticText>
+                <reportElement x="180" y="10" width="120" height="30" uuid="f6f6e533-5c8e-4f16-95f0-6c9a3044a2b2"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <text><![CDATA[TOTAL VENTAS:]]></text>
+            </staticText>
+
+            <textField pattern="S/ #,##0.00">
+                <reportElement x="300" y="10" width="100" height="30" uuid="f7f7e533-5c8e-4f16-95f0-6c9a3044a2b3"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$V{SumaTotal}]]></textFieldExpression>
+            </textField>
+        </band>
+    </summary>
+
+</jasperReport>
