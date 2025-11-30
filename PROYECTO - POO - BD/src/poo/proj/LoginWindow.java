@@ -30,16 +30,14 @@ public class LoginWindow extends JFrame {
         // -----------------------------
         // PANEL SUPERIOR (Botones de utilidad)
         // -----------------------------
-        JPanel panelTop = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Alineado a la derecha
+        JPanel panelTop = new JPanel(new FlowLayout(FlowLayout.RIGHT)); 
         panelTop.setBackground(new Color(200, 210, 220));
         
-        // --- NUEVO BOTÓN: VERIFICAR CONEXIÓN ---
-        JButton btnTestDB = crearBoton("Verificar BD", new Color(100, 100, 100)); // Gris oscuro
-        JButton btnCerrarSesion = crearBoton("Cerrar Aplicación", new Color(255, 100, 100)); // Rojo
+        JButton btnTestDB = crearBoton("Verificar BD", new Color(100, 100, 100)); 
+        JButton btnCerrarSesion = crearBoton("Cerrar Aplicación", new Color(255, 100, 100)); 
         
         panelTop.add(btnTestDB);
         panelTop.add(btnCerrarSesion);
-        
         add(panelTop, BorderLayout.NORTH);
 
         // -----------------------------
@@ -88,25 +86,32 @@ public class LoginWindow extends JFrame {
         add(panelCentral, BorderLayout.CENTER);
 
         // -----------------------------
-        // LÓGICA DE BOTONES
+        // LÓGICA DE BOTONES (AQUÍ ESTÁ EL CAMBIO)
         // -----------------------------
 
-        // --- ACCIÓN: PROBAR CONEXIÓN ---
+        // Verificar conexión
         btnTestDB.addActionListener(e -> {
             try (Connection c = Conexion.getConexion()) {
                 if (c != null) {
                     JOptionPane.showMessageDialog(null, "¡Conexión a Base de Datos EXITOSA! ✅");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error: La conexión devolvió NULL ❌", "Error de Conexión", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Error: La conexión devolvió NULL ❌", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (SQLException ex) {
-                 JOptionPane.showMessageDialog(null, "Excepción al conectar: " + ex.getMessage(), "Error Crítico", JOptionPane.ERROR_MESSAGE);
+                 JOptionPane.showMessageDialog(null, "Excepción al conectar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
         // Login Admin
         btnLoginAdmin.addActionListener(e -> {
-            Administrador admin = controlador.validarAdministrador(txtNombre.getText(), txtApP.getText(), txtApM.getText(), txtDoc.getText());
+            // AGREGAMOS .trim() A CADA CAMPO PARA BORRAR ESPACIOS
+            Administrador admin = controlador.validarAdministrador(
+                    txtNombre.getText().trim(), 
+                    txtApP.getText().trim(), 
+                    txtApM.getText().trim(), 
+                    txtDoc.getText().trim()
+            );
+            
             if (admin != null) {
                 JOptionPane.showMessageDialog(null, "Bienvenido Administrador: " + admin.getNombre());
                 new VentanaPrincipal(controlador, admin, null).setVisible(true);
@@ -118,7 +123,14 @@ public class LoginWindow extends JFrame {
 
         // Login Empleado
         btnLoginEmpleado.addActionListener(e -> {
-            EmpleadoVentas emp = controlador.validarEmpleado(txtNombre.getText(), txtApP.getText(), txtApM.getText(), txtDoc.getText());
+            // AGREGAMOS .trim() AQUI TAMBIÉN
+            EmpleadoVentas emp = controlador.validarEmpleado(
+                    txtNombre.getText().trim(), 
+                    txtApP.getText().trim(), 
+                    txtApM.getText().trim(), 
+                    txtDoc.getText().trim()
+            );
+            
             if (emp != null) {
                 JOptionPane.showMessageDialog(null, "Bienvenido Vendedor: " + emp.getNombre());
                 new VentanaPrincipal(controlador, null, emp).setVisible(true);
