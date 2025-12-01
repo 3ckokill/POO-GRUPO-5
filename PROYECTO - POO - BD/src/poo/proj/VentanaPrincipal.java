@@ -351,7 +351,7 @@ public class VentanaPrincipal extends JFrame {
                 double precio = Double.parseDouble(txtPrecio.getText().trim());
                 int stock = Integer.parseInt(txtStock.getText().trim());
 
-                if(precio < 0 || stock < 0) throw new Exception("El precio y stock no pueden ser negativos.");
+                if(precio < 0 || stock < 0) throw new Exception("El precio o stock no pueden ser negativos.");
 
                 admin.registrarProducto(controlador, txtNombre.getText().trim(), precio, stock);
                 

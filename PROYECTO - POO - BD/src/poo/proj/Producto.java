@@ -20,10 +20,22 @@ public class Producto {
     public void setNombre(String nombre) { this.nombre = nombre; }
 
     public double getPrecio() { return precio; }
-    public void setPrecio(double precio) { this.precio = precio; }
+    
+    public void setPrecio(double precio) {
+        if (precio < 0) {
+            throw new IllegalArgumentException("El precio no puede ser negativo.");
+        }
+        this.precio = precio;
+    }
 
     public int getStock() { return stock; }
-    public void setStock(int stock) { this.stock = stock; }
+    
+    public void setStock(int stock) {
+        if (stock < 0) {
+            throw new IllegalArgumentException("El stock no puede ser negativo.");
+        }
+        this.stock = stock;
+    }
 
     public void mostrarDatos() {
         System.out.println("ID: " + id + " | " + nombre + " | S/." + precio + " | Stock: " + stock);

@@ -15,9 +15,9 @@ CREATE TABLE trabajadores (
     ap_paterno VARCHAR(100) NOT NULL,
     ap_materno VARCHAR(100) NOT NULL,
     tipo_doc VARCHAR(20) NOT NULL,
-    num_doc VARCHAR(20) UNIQUE NOT NULL,
+    num_doc VARCHAR(20) UNIQUE NOT NULL, -- DNI único de 8 dígitos
     sueldo DOUBLE NOT NULL,
-    rol VARCHAR(20) NOT NULL,
+    rol VARCHAR(20) NOT NULL,            -- 'ADMIN' o 'VENDEDOR'
     horas_extra INT DEFAULT 0
 );
 
@@ -38,12 +38,18 @@ CREATE TABLE ventas (
 );
 
 -- =========================================================
--- 3. POBLADO DE DATOS: TRABAJADORES (REALES)
+-- 3. POBLADO DE DATOS: TRABAJADORES (TODOS)
 -- =========================================================
 
 INSERT INTO trabajadores (nombre, ap_paterno, ap_materno, tipo_doc, num_doc, sueldo, rol, horas_extra) 
 VALUES 
-('Carlos Alberto', 'Ruiz', 'Gomez', 'DNI', '45896321', 3500.00, 'ADMIN', 0),
+-- --- NUEVOS AGREGADOS ---
+('Jhonny Rafael', 'Alonzo', 'Rabanal', 'DNI', '76004079', 3500.00, 'ADMIN', 0),
+('Jose Luis', 'Alcantara', 'Vergara De Los Santos', 'DNI', '48537114', 1200.00, 'VENDEDOR', 0),
+('Dairon Adrian', 'Perez', 'Lopez', 'DNI', '74862345', 1200.00, 'VENDEDOR', 0),
+
+-- --- ANTERIORES (MANTENIDOS) ---
+('Carlos Alberto', 'Ruiz', 'Gomez', 'DNI', '45896321', 3000.00, 'ADMIN', 0),
 ('Ana Maria', 'Lopez', 'Torres', 'DNI', '74125896', 1200.00, 'VENDEDOR', 2),
 ('Luis Fernando', 'Quispe', 'Mamani', 'DNI', '15935748', 1200.00, 'VENDEDOR', 5),
 ('Sofia Alejandra', 'Diaz', 'Vega', 'DNI', '85245612', 600.00, 'VENDEDOR', 0);
@@ -54,7 +60,7 @@ VALUES
 
 -- --- CATEGORÍA 1: SERVICIOS DE IMPRENTA Y DIGITAL ---
 INSERT INTO productos (nombre, precio, stock) VALUES 
-('Copia / Impresión B/N (A4)', 0.20, 5000),    -- Stock = Hojas papel bond
+('Copia / Impresión B/N (A4)', 0.20, 5000),
 ('Copia / Impresión COLOR (A4)', 0.50, 2000),
 ('Copia / Impresión B/N (A3)', 0.50, 500),
 ('Copia / Impresión COLOR (A3)', 1.50, 300),
@@ -63,11 +69,11 @@ INSERT INTO productos (nombre, precio, stock) VALUES
 
 -- --- CATEGORÍA 2: ACABADOS (ANILLADOS Y PLASTIFICADOS) ---
 INSERT INTO productos (nombre, precio, stock) VALUES 
-('Anillado A4 (1-50 hojas)', 3.00, 200),       -- Stock = Anillos disponibles
+('Anillado A4 (1-50 hojas)', 3.00, 200),
 ('Anillado A4 (51-100 hojas)', 4.00, 150),
 ('Anillado A4 (100+ hojas)', 6.00, 100),
 ('Espiralado A4 Grueso', 8.00, 50),
-('Plastificado Carnet / DNI', 1.50, 300),      -- Stock = Micas
+('Plastificado Carnet / DNI', 1.50, 300),
 ('Plastificado A4', 3.00, 100);
 
 -- --- CATEGORÍA 3: ÚTILES DE ESCRITORIO Y LIBRERÍA ---
